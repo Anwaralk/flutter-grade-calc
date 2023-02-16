@@ -6,23 +6,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final scoreTextController = TextEditingController();
+
+  var alphaScore = '-';
 
   void calculateScore(BuildContext context) {
     final score = double.parse(scoreTextController.text);
-    if (score >= 90) {
-      showSnack(context, 'A');
-    } else if (score >= 80) {
-      showSnack(context, 'B');
-    } else if (score >= 70) {
-      showSnack(context, 'C');
-    } else if (score >= 60) {
-      showSnack(context, 'D');
-    } else {
-      showSnack(context, 'F');
-    }
+    setState(() {
+      if (score >= 90) {
+        showSnack(context, 'A');
+        alphaScore = 'A';
+      } else if (score >= 80) {
+        showSnack(context, 'B');
+        alphaScore = 'B';
+      } else if (score >= 70) {
+        showSnack(context, 'C');
+        alphaScore = 'C';
+      } else if (score >= 60) {
+        showSnack(context, 'D');
+        alphaScore = 'D';
+      } else {
+        showSnack(context, 'F');
+        alphaScore = 'F';
+      }
+    });
   }
 
   void showSnack(BuildContext context, String text) {
@@ -63,7 +78,7 @@ class HomeScreen extends StatelessWidget {
               child: Text('Calculate'),
             ),
             Spacer(),
-            Text('A',
+            Text(alphaScore,
                 style: TextStyle(
                   color: Color.fromARGB(255, 115, 158, 232),
                   fontWeight: FontWeight.bold,
